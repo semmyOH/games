@@ -18,6 +18,7 @@
                     <th>Platform</th>
                     <th>Genre</th>
                     <th>Rating</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,7 @@
                         <td>{{ $game->platform }}</td>
                         <td>{{ $game->genre }}</td>
                         <td>{{ $game->rating }}/10</td> 
+                        <td><a href="/games/edit/{{ $game->id }}" class="btn btn-primary">Edit</a></td>
                     </tr>
                 @endforeach
             </tbody>
