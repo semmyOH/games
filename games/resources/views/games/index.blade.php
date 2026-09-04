@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container" style="margin:40px;">
-        @extends('games.base')
+        @extends('base')
         @section('title', '🎮 Game Collection')
         @section('content')
             <a href="/games/create" class="btn btn-success mb-3">Add Game</a>
@@ -44,7 +44,18 @@
                         </tr>
                     @endforeach
                 </tbody>
+                @php( $sum = 0)
+                @foreach($games as $game)
+                    @php( $sum += $game->rating)
+                @endforeach
+                <tfoot>
+                    <tr>
+                        <th colspan="4" style="text-align: right;">gemiddelde rating:</th>
+                        <th>{{ number_format($sum / max(count($games), 1), 1) }}/10</th>
+                    </tr>
+                </tfoot>
             </table>
+        @endsection
         </div>
     </body>
 </html>

@@ -8,7 +8,9 @@
 </head>
 <body>
     <div class="container" style="margin:40px;">
-        <h1 class="display-4">✏️ Edit Game</h1>
+        @extends('base')
+        @section('title', '✏️ Edit Game')
+        @section('content')
         <form method="post" action="/games/update/{{ $game->id }}">
             @csrf
             <div class="form-group">
