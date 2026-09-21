@@ -8,13 +8,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// iedereen kan dit zien
 Route::get('games', [GameController::class, 'index']);
-Route::get('games/create', [GameController::class, 'create']);
-Route::post('games/store', [GameController::class, 'store']);
-Route::get('games/show/{id}', [GameController::class, 'showGame']);
-Route::get('games/edit/{id}', [GameController::class, 'edit']);
-Route::post('games/update/{id}', [GameController::class, 'update']);
-Route::delete('games/delete/{id}', [GameController::class, 'destroy']);
+
+// Alleen voor ingelogde gebruikers
+Route::middleware('auth')->group(function () {
+    Route::get('games/create', [GameController::class, 'create']);
+    Route::post('games/store', [GameController::class, 'store']);
+    Route::get('games/show/{id}', [GameController::class, 'showGame']);
+    Route::get('games/edit/{id}', [GameController::class, 'edit']);
+    Route::post('games/update/{id}', [GameController::class, 'update']);
+    Route::delete('games/delete/{id}', [GameController::class, 'destroy']);
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
