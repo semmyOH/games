@@ -3,7 +3,9 @@
 @section('title', '🎮 Game Collection')
 
 @section('content')
-            <a href="/games/create" class="btn btn-success mb-3">Add Game</a>
+            @can('product invoeren')
+                <a href="/games/create" class="btn btn-success mb-3">Add Game</a>
+            @endcan
 
             <table class="table">
                 <thead class="thead-dark">
@@ -14,8 +16,12 @@
                         <th>Genre</th>
                         <th>Rating</th>
                         <th>Show</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        @can('product aanpassen')
+                            <th>Edit</th>
+                        @endcan
+                        @can('product verwijderen')
+                            <th>Delete</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -27,13 +33,19 @@
                             <td>{{ $game->genre }}</td>
                             <td>{{ $game->rating }}/10</td> 
                             <td><a href="/games/show/{{ $game->id }}" class="btn btn-info btn-sm">Show</a></td>
-                            <td><a href="/games/edit/{{ $game->id }}" class="btn btn-primary btn-sm">Edit</a></td>
                             <td>
-                                <form action="/games/delete/{{ $game->id }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button onclick="return confirm('weet je zeker?')" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                @can('product aanpassen')
+                                    <a href="/games/edit/{{ $game->id }}" class="btn btn-primary btn-sm">Edit</a>
+                                @endcan
+                            </td>
+                            <td>
+                                @can('product verwijderen')
+                                    <form action="/games/delete/{{ $game->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button onclick="return confirm('weet je zeker?')" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
