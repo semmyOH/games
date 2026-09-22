@@ -9,6 +9,16 @@
 <body>
     <div class="container" style="margin:40px;">
         <h1 class="display-4">@yield('title')</h1>
+        @auth
+            @role('admin')
+                <nav class="mb-4">
+                    <a href="{{ route('admin.permissions.index') }}" class="mr-3">Permissies</a>
+                    <a href="{{ route('admin.roles.index') }}" class="mr-3">Rollen</a>
+                    <a href="{{ route('admin.role-permissions.index') }}" class="mr-3">Rol-permissies</a>
+                    <a href="{{ route('admin.user-roles.index') }}">Gebruiker-rollen</a>
+                </nav>
+            @endrole
+        @endauth
         @yield('content')
     </div>
 </body>

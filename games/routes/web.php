@@ -3,6 +3,9 @@
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,7 +25,23 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('games/delete/{id}', [GameController::class, 'destroy']);
 
     Route::resource('admin/permissions', PermissionController::class)
-        ->names('admin.permissions');
+        ->names('admin.permissions')
+        ->except('show');
+    Route::resource('admin/roles', RoleController::class)
+        ->names('admin.roles')
+        ->except('show');
+    Route::get('admin/role-permissions', [RolePermissionController::class, 'index'])
+        ->name('admin.role-permissions.index');
+    Route::post('admin/role-permissions', [RolePermissionController::class, 'store'])
+        ->name('admin.role-permissions.store');
+    Route::delete('admin/role-permissions/{role}/{permission}', [RolePermissionController::class, 'destroy'])
+        ->name('admin.role-permissions.destroy');
+    Route::get('admin/user-roles', [UserRoleController::class, 'index'])
+        ->name('admin.user-roles.index');
+    Route::post('admin/user-roles', [UserRoleController::class, 'store'])
+        ->name('admin.user-roles.store');
+    Route::delete('admin/user-roles/{user}/{role}', [UserRoleController::class, 'destroy'])
+        ->name('admin.user-roles.destroy');
 });
 
 Route::get('/dashboard', function () {
